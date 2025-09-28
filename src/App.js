@@ -5,6 +5,7 @@ import InputContainer from './components/InputContainer';
 import ResultsDisplay from './components/ResultsDisplay';
 import { flowData } from './data/flowData';
 import { calculateMetabolicAge } from './utils/calculations';
+import { getSmartAcknowledgement, getMetabolicAgePreview } from './utils/smartAcks';
 
 function App() {
   const [messages, setMessages] = useState([]);
@@ -12,6 +13,12 @@ function App() {
   const [userData, setUserData] = useState({});
   const [showResults, setShowResults] = useState(false);
   const [results, setResults] = useState(null);
+  const [uiState, setUIState] = useState({
+    units: {
+      height: 'cm',
+      weight: 'kg'
+    }
+  });
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -23,13 +30,47 @@ function App() {
   }, [messages]);
 
   useEffect(() => {
-    // Start the conversation
-    const introStep = flowData.flow.find(step => step.id === 'intro');
-    if (introStep) {
-      const randomPrompt = introStep.prompts[Math.floor(Math.random() * introStep.prompts.length)];
-      addSystemMessage(randomPrompt, introStep);
+    // Load saved state from localStorage
+    const savedUserData = localStorage.getItem('metabolicAgeUserData');
+    const savedUIState = localStorage.getItem('metabolicAgeUIState');
+    const savedCurrentStep = localStorage.getItem('metabolicAgeCurrentStep');
+    
+    if (savedUserData) {
+      setUserData(JSON.parse(savedUserData));
+    }
+    if (savedUIState) {
+      setUIState(JSON.parse(savedUIState));
+    }
+    if (savedCurrentStep && savedCurrentStep !== 'intro') {
+      setCurrentStep(savedCurrentStep);
+      // Continue from where we left off
+      const step = flowData.flow.find(s => s.id === savedCurrentStep);
+      if (step) {
+        const randomPrompt = step.prompts[Math.floor(Math.random() * step.prompts.length)];
+        addSystemMessage(randomPrompt, step);
+      }
+    } else {
+      // Start the conversation
+      const introStep = flowData.flow.find(step => step.id === 'intro');
+      if (introStep) {
+        const randomPrompt = introStep.prompts[Math.floor(Math.random() * introStep.prompts.length)];
+        addSystemMessage(randomPrompt, introStep);
+      }
     }
   }, []);
+
+  // Save state to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('metabolicAgeUserData', JSON.stringify(userData));
+  }, [userData]);
+
+  useEffect(() => {
+    localStorage.setItem('metabolicAgeUIState', JSON.stringify(uiState));
+  }, [uiState]);
+
+  useEffect(() => {
+    localStorage.setItem('metabolicAgeCurrentStep', currentStep);
+  }, [currentStep]);
 
   const addSystemMessage = (text, step = null) => {
     const newMessage = {
@@ -65,13 +106,19 @@ function App() {
       }));
     }
 
-    // Add acknowledgement if available
-    if (step.ack && step.ack.length > 0) {
-      setTimeout(() => {
-        const randomAck = step.ack[Math.floor(Math.random() * step.ack.length)];
-        addSystemMessage(randomAck);
-      }, 500);
-    }
+    // Add smart acknowledgement
+    setTimeout(() => {
+      const smartAck = getSmartAcknowledgement(userData, value, step.id);
+      addSystemMessage(smartAck);
+      
+      // Show metabolic age preview mid-flow
+      const preview = getMetabolicAgePreview({ ...userData, [step.bind]: value });
+      if (preview && Object.keys(userData).length >= 8) {
+        setTimeout(() => {
+          addSystemMessage(preview);
+        }, 1000);
+      }
+    }, 500);
 
     // Handle next step
     setTimeout(() => {
@@ -102,6 +149,10 @@ function App() {
     setUserData({});
     setShowResults(false);
     setResults(null);
+    
+    // Clear localStorage
+    localStorage.removeItem('metabolicAgeUserData');
+    localStorage.removeItem('metabolicAgeCurrentStep');
     
     // Restart conversation
     setTimeout(() => {
@@ -134,6 +185,8 @@ function App() {
             onUserResponse={handleUserResponse}
             onNumberInput={handleNumberInput}
             flowData={flowData}
+            uiState={uiState}
+            onUIStateChange={setUIState}
           />
         </main>
       ) : (

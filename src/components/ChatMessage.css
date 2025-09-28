@@ -51,9 +51,39 @@
   border-bottom-right-radius: 8px;
 }
 
+/* Message details */
+.message-details {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.detail-item {
+  font-size: 0.85rem;
+  color: #6B7280;
+  margin-bottom: 0.25rem;
+  padding-left: 0.5rem;
+  position: relative;
+}
+
+.detail-item:before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #9CA3AF;
+}
+
+.detail-item:last-child {
+  margin-bottom: 0;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .message-content {
     max-width: 85%;
+  }
+  
+  .detail-item {
+    font-size: 0.8rem;
   }
 }

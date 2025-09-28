@@ -16,6 +16,15 @@ const ChatMessage = ({ message }) => {
       </div>
       <div className="message-content">
         {message.text}
+        {message.step && message.step.details && (
+          <div className="message-details">
+            {message.step.details.map((detail, index) => (
+              <div key={index} className="detail-item">
+                {detail}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

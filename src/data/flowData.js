@@ -76,6 +76,11 @@ export const flowData = {
         "How regular are your bowel movements?",
         "Bowel movements — what's typical for you?"
       ],
+      "details": [
+        "Daily = Once or more per day",
+        "Sometimes = 3-6 times per week", 
+        "Often irregular = Less than 3 times per week"
+      ],
       "ack": [
         "Regularity matters for gut health.",
         "Thanks — that helps estimate gut function."
@@ -94,6 +99,11 @@ export const flowData = {
       "prompts": [
         "Do you feel bloated after meals?",
         "Bloating after eating?"
+      ],
+      "details": [
+        "Never = Rarely or never feel bloated",
+        "Sometimes = 2-3 times per week",
+        "Often = Daily or most days"
       ],
       "ack": [
         "Noted.",

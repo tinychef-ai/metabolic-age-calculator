@@ -1,0 +1,62 @@
+.wheel-picker {
+  max-height: 220px;
+  overflow: hidden;
+  border-radius: 15px;
+  background: #F8FAFC;
+  border: 2px solid #E5E7EB;
+}
+
+.wheel-container {
+  max-height: 220px;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  padding: 0.5rem 0;
+}
+
+.wheel-option {
+  padding: 12px 16px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  scroll-snap-align: center;
+  border-radius: 8px;
+  margin: 2px 8px;
+}
+
+.wheel-option:hover {
+  background: #E5E7EB;
+}
+
+.wheel-option.active {
+  background: linear-gradient(135deg, #4F46E5, #7C3AED);
+  color: white;
+  font-weight: 700;
+  transform: scale(1.02);
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
+}
+
+.spacer {
+  height: 80px;
+}
+
+/* Custom scrollbar */
+.wheel-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.wheel-container::-webkit-scrollbar-track {
+  background: #F1F5F9;
+  border-radius: 2px;
+}
+
+.wheel-container::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 2px;
+}
+
+.wheel-container::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
