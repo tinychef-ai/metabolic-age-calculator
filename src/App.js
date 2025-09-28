@@ -6,7 +6,8 @@ import ResultsDisplay from './components/ResultsDisplay';
 import { flowData } from './data/flowData';
 import { calculateMetabolicAge, testCalculations } from './utils/calculations';
 import { getSmartAcknowledgement, getMetabolicAgePreview } from './utils/smartAcks';
-import { storeDataLocally, exportDataAsCSV } from './utils/googleSheets';
+import { storeDataLocally, sendToGoogleSheets } from './utils/googleSheets';
+import { enableAdminFunctions } from './utils/adminUtils';
 
 function App() {
   const [messages, setMessages] = useState([]);
@@ -73,6 +74,13 @@ function App() {
     localStorage.setItem('metabolicAgeCurrentStep', currentStep);
   }, [currentStep]);
 
+  // Enable admin functions for console access (development only)
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      enableAdminFunctions();
+    }
+  }, []);
+
   const addSystemMessage = (text, step = null) => {
     const newMessage = {
       id: Date.now(),
@@ -128,8 +136,11 @@ function App() {
         const updatedUserData = { ...userData, [step.bind]: value };
         const metabolicAgeResults = calculateMetabolicAge(updatedUserData);
         
-        // Store data locally for collection
+        // Store data locally (always)
         storeDataLocally(updatedUserData, metabolicAgeResults);
+        
+        // Send to Google Sheets automatically (if configured)
+        sendToGoogleSheets(updatedUserData, metabolicAgeResults);
         
         setResults(metabolicAgeResults);
         setShowResults(true);

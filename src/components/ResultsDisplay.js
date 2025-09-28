@@ -1,6 +1,5 @@
 import React from 'react';
 import './ResultsDisplay.css';
-import { exportDataAsCSV } from '../utils/googleSheets';
 
 const ResultsDisplay = ({ results, onRestart }) => {
   if (!results) return null;
@@ -142,9 +141,6 @@ const ResultsDisplay = ({ results, onRestart }) => {
       <div className="action-buttons">
         <button onClick={onRestart} className="restart-btn">
           Calculate Again
-        </button>
-        <button onClick={exportDataAsCSV} className="export-btn">
-          Export Data (CSV)
         </button>
       </div>
     </div>

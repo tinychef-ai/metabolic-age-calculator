@@ -1,10 +1,16 @@
-// Google Sheets integration for data collection
+// Google Sheets integration for automatic data collection
 // This uses Google Apps Script Web App for data collection
 
-const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'; // Replace with your actual URL
+const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'; // Replace with your actual URL when ready
 
-// Function to send data to Google Sheets
+// Function to send data to Google Sheets (automatic, behind the scenes)
 export const sendToGoogleSheets = async (userData, results) => {
+  // Only attempt to send if Google Script URL is configured
+  if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+    console.log('Google Sheets integration not configured yet - data stored locally only');
+    return false;
+  }
+
   try {
     const payload = {
       timestamp: new Date().toISOString(),
@@ -40,6 +46,7 @@ export const sendToGoogleSheets = async (userData, results) => {
       }
     };
 
+    // Send data silently in the background
     const response = await fetch(GOOGLE_SCRIPT_URL, {
       method: 'POST',
       headers: {
@@ -49,7 +56,7 @@ export const sendToGoogleSheets = async (userData, results) => {
     });
 
     if (response.ok) {
-      console.log('Data sent to Google Sheets successfully');
+      console.log('Data sent to Google Sheets successfully (background)');
       return true;
     } else {
       console.error('Failed to send data to Google Sheets:', response.statusText);
