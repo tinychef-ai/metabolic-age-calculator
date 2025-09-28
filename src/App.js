@@ -4,8 +4,9 @@ import ChatMessage from './components/ChatMessage';
 import InputContainer from './components/InputContainer';
 import ResultsDisplay from './components/ResultsDisplay';
 import { flowData } from './data/flowData';
-import { calculateMetabolicAge } from './utils/calculations';
+import { calculateMetabolicAge, testCalculations } from './utils/calculations';
 import { getSmartAcknowledgement, getMetabolicAgePreview } from './utils/smartAcks';
+import { storeDataLocally, exportDataAsCSV } from './utils/googleSheets';
 
 function App() {
   const [messages, setMessages] = useState([]);
@@ -123,8 +124,13 @@ function App() {
     // Handle next step
     setTimeout(() => {
       if (step.next === 'END') {
-        // Calculate results
-        const metabolicAgeResults = calculateMetabolicAge(userData);
+        // Calculate results with updated user data
+        const updatedUserData = { ...userData, [step.bind]: value };
+        const metabolicAgeResults = calculateMetabolicAge(updatedUserData);
+        
+        // Store data locally for collection
+        storeDataLocally(updatedUserData, metabolicAgeResults);
+        
         setResults(metabolicAgeResults);
         setShowResults(true);
       } else {
