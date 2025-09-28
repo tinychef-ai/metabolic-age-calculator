@@ -2,8 +2,6 @@
 const CACHE_NAME = 'metabolic-age-calculator-v1';
 const urlsToCache = [
   '/',
-  '/static/js/bundle.js',
-  '/static/css/main.css',
   '/manifest.json'
 ];
 
