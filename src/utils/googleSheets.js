@@ -1,7 +1,7 @@
 // Google Sheets integration for automatic data collection
 // This uses Google Apps Script Web App for data collection
 
-const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'; // Replace with your actual URL when ready
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw7swkPIWAe7LzJzjiLZDvqiVL52DzQhP9LBhiZxwxou6VCxDTe8Y3Go1Kses8p9Yhz-A/exec';
 
 // Function to send data to Google Sheets (automatic, behind the scenes)
 export const sendToGoogleSheets = async (userData, results) => {
