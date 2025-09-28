@@ -1,0 +1,398 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+}
+
+.app {
+    max-width: 800px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+.header {
+    background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+    color: white;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    border-radius: 0 0 20px 20px;
+}
+
+.header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.header p {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+/* Chat container */
+.chat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 1rem;
+    max-height: 60vh;
+}
+
+/* Message bubbles */
+.message {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.message.user {
+    flex-direction: row-reverse;
+}
+
+.message-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.message.system .message-avatar {
+    background: linear-gradient(135deg, #4F46E5, #7C3AED);
+    color: white;
+}
+
+.message.user .message-avatar {
+    background: linear-gradient(135deg, #10B981, #059669);
+    color: white;
+}
+
+.message-content {
+    max-width: 70%;
+    padding: 1rem 1.25rem;
+    border-radius: 20px;
+    position: relative;
+    word-wrap: break-word;
+}
+
+.message.system .message-content {
+    background: #F3F4F6;
+    color: #374151;
+    border-bottom-left-radius: 8px;
+}
+
+.message.user .message-content {
+    background: linear-gradient(135deg, #4F46E5, #7C3AED);
+    color: white;
+    border-bottom-right-radius: 8px;
+}
+
+/* Choice chips */
+.chip-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.chip {
+    background: white;
+    border: 2px solid #E5E7EB;
+    border-radius: 25px;
+    padding: 0.75rem 1.25rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #374151;
+    user-select: none;
+}
+
+.chip:hover {
+    border-color: #4F46E5;
+    background: #F8FAFC;
+    transform: translateY(-1px);
+}
+
+.chip.selected {
+    background: linear-gradient(135deg, #4F46E5, #7C3AED);
+    border-color: #4F46E5;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+/* Input container */
+.input-container {
+    background: white;
+    border-top: 1px solid #E5E7EB;
+    padding: 1.5rem;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#textInput {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border: 2px solid #E5E7EB;
+    border-radius: 25px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+#textInput:focus {
+    border-color: #4F46E5;
+}
+
+.submit-btn {
+    background: linear-gradient(135deg, #4F46E5, #7C3AED);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    align-self: flex-end;
+}
+
+.submit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Results container */
+.results-container {
+    padding: 2rem 1.5rem;
+    background: #F8FAFC;
+}
+
+.results-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.metabolic-age-display {
+    background: linear-gradient(135deg, #4F46E5, #7C3AED);
+    color: white;
+    padding: 2rem;
+    border-radius: 20px;
+    text-align: center;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 25px rgba(79, 70, 229, 0.3);
+}
+
+.metabolic-age-number {
+    font-size: 4rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.metabolic-age-label {
+    font-size: 1.25rem;
+    opacity: 0.9;
+}
+
+.metabolic-age-comparison {
+    font-size: 1.1rem;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+}
+
+.factor-cards {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.factor-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid #4F46E5;
+}
+
+.factor-card.positive {
+    border-left-color: #10B981;
+}
+
+.factor-card.negative {
+    border-left-color: #EF4444;
+}
+
+.factor-card.neutral {
+    border-left-color: #6B7280;
+}
+
+.factor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.factor-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #374151;
+}
+
+.factor-impact {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.factor-impact.positive {
+    color: #10B981;
+}
+
+.factor-impact.negative {
+    color: #EF4444;
+}
+
+.factor-impact.neutral {
+    color: #6B7280;
+}
+
+.factor-details {
+    color: #6B7280;
+    font-size: 0.95rem;
+}
+
+.waterfall {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.waterfall-title {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #374151;
+}
+
+.waterfall-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.waterfall-step {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: #F8FAFC;
+    border-radius: 10px;
+    font-size: 0.95rem;
+}
+
+.waterfall-step:last-child {
+    background: linear-gradient(135deg, #4F46E5, #7C3AED);
+    color: white;
+    font-weight: 600;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .app {
+        margin: 0;
+        border-radius: 0;
+    }
+    
+    .header {
+        border-radius: 0;
+        padding: 1.5rem 1rem;
+    }
+    
+    .header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .chat-container {
+        padding: 1rem;
+    }
+    
+    .message-content {
+        max-width: 85%;
+    }
+    
+    .metabolic-age-number {
+        font-size: 3rem;
+    }
+    
+    .factor-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Animation for new messages */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.message {
+    animation: slideIn 0.3s ease-out;
+}
+
+/* Loading animation */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.loading {
+    animation: pulse 1.5s ease-in-out infinite;
+}

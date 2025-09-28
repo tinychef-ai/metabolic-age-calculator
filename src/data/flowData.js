@@ -1,0 +1,300 @@
+// Flow data from the JSON schema
+export const flowData = {
+  "version": "1.0",
+  "meta": {
+    "name": "metabolic_age_intake_chat",
+    "locale": "en-IN"
+  },
+  "flow": [
+    {
+      "id": "intro",
+      "type": "chips",
+      "bind": "_intro",
+      "prompts": [
+        "Hi 👋 I'll ask a few quick things to estimate your Metabolic Age.",
+        "Hey! Let's figure out your Metabolic Age with a few quick questions."
+      ],
+      "ack": [
+        "Great, let's go!",
+        "Awesome — this takes under 90 seconds."
+      ],
+      "options": [
+        { "label": "Start", "value": "start" }
+      ],
+      "next": "age"
+    },
+    {
+      "id": "age",
+      "type": "number",
+      "bind": "age",
+      "prompts": [
+        "What's your age?",
+        "How old are you?"
+      ],
+      "ack": [
+        "Thanks.",
+        "Got it."
+      ],
+      "input": { "min": 16, "max": 90, "step": 1, "unit": "years", "placeholder": "e.g., 32" },
+      "next": "height"
+    },
+    {
+      "id": "height",
+      "type": "number",
+      "bind": "heightCm",
+      "prompts": [
+        "Your height in centimeters?",
+        "Height (cm)?"
+      ],
+      "ack": [
+        "Nice.",
+        "Thanks."
+      ],
+      "input": { "min": 120, "max": 210, "step": 1, "unit": "cm", "placeholder": "e.g., 170" },
+      "next": "weight"
+    },
+    {
+      "id": "weight",
+      "type": "number",
+      "bind": "weightKg",
+      "prompts": [
+        "Your weight in kilograms?",
+        "Weight (kg)?"
+      ],
+      "ack": [
+        "Thanks.",
+        "Got it."
+      ],
+      "input": { "min": 35, "max": 180, "step": 0.5, "unit": "kg", "placeholder": "e.g., 72.5" },
+      "next": "bowel"
+    },
+    {
+      "id": "bowel",
+      "type": "chips",
+      "bind": "bowel",
+      "prompts": [
+        "How regular are your bowel movements?",
+        "Bowel movements — what's typical for you?"
+      ],
+      "ack": [
+        "Regularity matters for gut health.",
+        "Thanks — that helps estimate gut function."
+      ],
+      "options": [
+        { "label": "😊 Daily", "value": "daily" },
+        { "label": "😐 Sometimes", "value": "sometimes" },
+        { "label": "😟 Often irregular", "value": "rare" }
+      ],
+      "next": "bloating"
+    },
+    {
+      "id": "bloating",
+      "type": "chips",
+      "bind": "bloating",
+      "prompts": [
+        "Do you feel bloated after meals?",
+        "Bloating after eating?"
+      ],
+      "ack": [
+        "Noted.",
+        "Thanks."
+      ],
+      "options": [
+        { "label": "😊 Never", "value": "never" },
+        { "label": "😐 Sometimes", "value": "sometimes" },
+        { "label": "😟 Often", "value": "often" }
+      ],
+      "next": "energy"
+    },
+    {
+      "id": "energy",
+      "type": "chips",
+      "bind": "energy",
+      "prompts": [
+        "Energy after meals?",
+        "How do you feel post-meal?"
+      ],
+      "ack": [
+        "Got it.",
+        "Thanks."
+      ],
+      "options": [
+        { "label": "⚡ Energized", "value": "energized" },
+        { "label": "😐 Normal", "value": "normal" },
+        { "label": "😴 Sluggish/Tired", "value": "sluggish" }
+      ],
+      "next": "sensitivities"
+    },
+    {
+      "id": "sensitivities",
+      "type": "chips",
+      "bind": "sensitivities",
+      "prompts": [
+        "Any food sensitivities?",
+        "Do certain foods bother you?"
+      ],
+      "ack": [
+        "Thanks.",
+        "Noted."
+      ],
+      "options": [
+        { "label": "🚫 None", "value": "none" },
+        { "label": "🤔 A few", "value": "few" },
+        { "label": "😟 Many", "value": "many" }
+      ],
+      "next": "fermented"
+    },
+    {
+      "id": "fermented",
+      "type": "chips",
+      "bind": "fermented",
+      "prompts": [
+        "Fermented foods like curd, idli/dosa, dhokla, kanji?",
+        "Curd/yogurt/fermented foods frequency?"
+      ],
+      "ack": [
+        "Nice — probiotics can help.",
+        "Thanks — noted."
+      ],
+      "options": [
+        { "label": "🥛 Daily", "value": "daily" },
+        { "label": "🥛 3–5×/week", "value": "3to5" },
+        { "label": "🥛 1–2×/week", "value": "1to2" },
+        { "label": "🥛 Rarely/Never", "value": "rare" }
+      ],
+      "next": "vegetables"
+    },
+    {
+      "id": "vegetables",
+      "type": "chips",
+      "bind": "vegetables",
+      "prompts": [
+        "Fruits & veggies per day?",
+        "How's your fiber intake?"
+      ],
+      "ack": [
+        "Great.",
+        "Thanks."
+      ],
+      "options": [
+        { "label": "🥗 5+ servings", "value": "high" },
+        { "label": "🥗 2–4 servings", "value": "mid" },
+        { "label": "🥗 0–1 servings", "value": "low" }
+      ],
+      "next": "hydration"
+    },
+    {
+      "id": "hydration",
+      "type": "chips",
+      "bind": "hydration",
+      "prompts": [
+        "Glasses of water per day (~250ml each)?",
+        "Daily hydration level?"
+      ],
+      "ack": [
+        "Hydration supports digestion.",
+        "Thanks."
+      ],
+      "options": [
+        { "label": "💧 8+ glasses", "value": "eightPlus" },
+        { "label": "💧 5–7 glasses", "value": "fiveToSeven" },
+        { "label": "💧 <5 glasses", "value": "underFive" }
+      ],
+      "next": "timing"
+    },
+    {
+      "id": "timing",
+      "type": "chips",
+      "bind": "timing",
+      "prompts": [
+        "Are your meal times consistent?",
+        "Meal timing pattern?"
+      ],
+      "ack": [
+        "Routine helps the gut clock.",
+        "Thanks."
+      ],
+      "options": [
+        { "label": "🕒 Regular routine", "value": "regular" },
+        { "label": "😐 Somewhat irregular", "value": "somewhat" },
+        { "label": "😵 Very irregular", "value": "chaotic" }
+      ],
+      "next": "sleep"
+    },
+    {
+      "id": "sleep",
+      "type": "chips",
+      "bind": "sleep",
+      "prompts": [
+        "How's your sleep lately?",
+        "Sleep quality most nights?"
+      ],
+      "ack": [
+        "Restorative sleep helps recovery.",
+        "Noted."
+      ],
+      "options": [
+        { "label": "😴 Great (7–9 hrs)", "value": "great" },
+        { "label": "😐 Okay (5–7 hrs)", "value": "okay" },
+        { "label": "😩 Poor (<5 or >10)", "value": "poor" }
+      ],
+      "next": "activity"
+    },
+    {
+      "id": "activity",
+      "type": "chips",
+      "bind": "activity",
+      "prompts": [
+        "Activity level most days?",
+        "How active are you?"
+      ],
+      "ack": [
+        "Movement is medicine.",
+        "Thanks."
+      ],
+      "options": [
+        { "label": "🏃 Very active", "value": "veryActive" },
+        { "label": "🚶 Somewhat active", "value": "somewhat" },
+        { "label": "🪑 Not much", "value": "notMuch" }
+      ],
+      "next": "stress"
+    },
+    {
+      "id": "stress",
+      "type": "chips",
+      "bind": "stress",
+      "prompts": [
+        "How stressed have you been lately?",
+        "Stress level these days?"
+      ],
+      "ack": [
+        "Thanks.",
+        "Noted."
+      ],
+      "options": [
+        { "label": "😌 Calm & peaceful", "value": "calm" },
+        { "label": "😐 Managing okay", "value": "managing" },
+        { "label": "😰 Pretty stressed", "value": "stressed" },
+        { "label": "😫 Overwhelmed", "value": "overwhelmed" }
+      ],
+      "next": "reveal"
+    },
+    {
+      "id": "reveal",
+      "type": "chips",
+      "bind": "_reveal",
+      "prompts": [
+        "All set! Ready to see your Metabolic Age?",
+        "Done! Want to see what's driving your Metabolic Age?"
+      ],
+      "ack": [
+        "Calculating…",
+        "Crunching the numbers…"
+      ],
+      "options": [
+        { "label": "Show my Metabolic Age", "value": "show" }
+      ],
+      "next": "END"
+    }
+  ]
+};

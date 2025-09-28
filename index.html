@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metabolic Age Calculator</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="theme-color" content="#4F46E5">
+    <meta name="description" content="Calculate your metabolic age through a quick conversational chat">
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <h1>Metabolic Age Calculator</h1>
+            <p>Discover your metabolic age through a quick chat</p>
+        </header>
+        
+        <main class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <!-- Messages will be dynamically added here -->
+            </div>
+            
+            <div class="input-container" id="inputContainer">
+                <div class="input-wrapper">
+                    <input type="text" id="textInput" placeholder="Type your answer..." style="display: none;">
+                    <div class="chip-container" id="chipContainer">
+                        <!-- Choice chips will be dynamically added here -->
+                    </div>
+                </div>
+                <button id="submitBtn" class="submit-btn" style="display: none;">Submit</button>
+            </div>
+        </main>
+        
+        <div class="results-container" id="resultsContainer" style="display: none;">
+            <!-- Results will be displayed here -->
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>

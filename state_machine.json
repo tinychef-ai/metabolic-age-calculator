@@ -1,0 +1,70 @@
+{
+  "version": "1.0",
+  "meta": {
+    "name": "metabolic_age_intake_chat",
+    "locale": "en-IN"
+  },
+  "schema": {
+    "type": "object",
+    "required": ["flow"],
+    "properties": {
+      "flow": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["id", "type", "bind", "prompts", "next"],
+          "properties": {
+            "id": { "type": "string" },
+            "type": { "type": "string", "enum": ["number", "chips"] },
+            "bind": { "type": "string" },
+            "prompts": {
+              "type": "array",
+              "items": { "type": "string" },
+              "minItems": 1
+            },
+            "ack": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "options": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["label", "value"],
+                "properties": {
+                  "label": { "type": "string" },
+                  "value": { "type": "string" }
+                }
+              }
+            },
+            "input": {
+              "type": "object",
+              "properties": {
+                "min": { "type": "number" },
+                "max": { "type": "number" },
+                "step": { "type": "number" },
+                "unit": { "type": "string" },
+                "placeholder": { "type": "string" }
+              }
+            },
+            "next": {
+              "oneOf": [
+                { "type": "string" },
+                {
+                  "type": "object",
+                  "properties": {
+                    "default": { "type": "string" },
+                    "byValue": {
+                      "type": "object",
+                      "additionalProperties": { "type": "string" }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
