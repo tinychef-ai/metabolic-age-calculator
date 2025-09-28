@@ -1,45 +1,47 @@
 // Service Worker for PWA functionality
-const CACHE_NAME = 'metabolic-age-calculator-v1';
-const urlsToCache = [
-  '/',
-  '/manifest.json'
-];
+const CACHE_NAME = 'metabolic-age-calculator-v2';
 
 // Install event
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => {
-        console.log('Opened cache');
-        return cache.addAll(urlsToCache);
-      })
-  );
-});
-
-// Fetch event
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        // Return cached version or fetch from network
-        return response || fetch(event.request);
-      }
-    )
-  );
+  console.log('Service Worker installing...');
+  self.skipWaiting();
 });
 
 // Activate event
 self.addEventListener('activate', (event) => {
+  console.log('Service Worker activating...');
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('Deleting old cache:', cacheName);
-            return caches.delete(cacheName);
-          }
+          console.log('Deleting old cache:', cacheName);
+          return caches.delete(cacheName);
         })
       );
+    }).then(() => {
+      return self.clients.claim();
+    })
+  );
+});
+
+// Fetch event - only cache specific resources
+self.addEventListener('fetch', (event) => {
+  // Only handle GET requests
+  if (event.request.method !== 'GET') {
+    return;
+  }
+  
+  // Don't cache dynamic content or API calls
+  if (event.request.url.includes('script.google.com') || 
+      event.request.url.includes('netlify.app') ||
+      event.request.url.includes('localhost')) {
+    return;
+  }
+  
+  event.respondWith(
+    fetch(event.request).catch(() => {
+      // If network fails, try cache
+      return caches.match(event.request);
     })
   );
 });
